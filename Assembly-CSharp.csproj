@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Negoita.cs" />
+     <Compile Include="Assets\Scripts\Parrot.cs" />
      <Compile Include="Assets\Tree.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/Angelica/Documents/Negoita/GameJam01/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

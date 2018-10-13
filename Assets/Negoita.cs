@@ -9,7 +9,7 @@ public class Negoita : MonoBehaviour
 
 	const float speedModifier = 3.5f;
 
-	const float shootCooldown = 1.0f;
+	const float shootCooldown = 0.5f;
 
 	float shootTimer = 0.0f;
 
@@ -42,13 +42,29 @@ public class Negoita : MonoBehaviour
 
 		if(Input.GetKey("space") && shootTimer > shootCooldown)
 		{
-			var parrot = Instantiate(parrotPrefab);
-
-			parrot.transform.position = transform.position;
-
-			shootTimer = 0.0f;
+			Fire();
 		}
 
 		shootTimer += Time.deltaTime;
+	}
+
+	void Fire()
+	{
+		var screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+		screenPosition.z = screenPosition.y;
+		screenPosition.y = 0.0f;
+		var mousePosition = new Vector3(Input.mousePosition.x, 0.0f, Input.mousePosition.y);
+
+		var direction = mousePosition - screenPosition;
+		direction.Normalize();
+
+		var parrotObject = Instantiate(parrotPrefab);
+
+		parrotObject.transform.position = transform.position;
+
+		var parrot = parrotObject.GetComponent<Parrot>();
+		parrot.Direction = direction;
+
+		shootTimer = 0.0f;
 	}
 }
