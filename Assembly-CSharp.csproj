@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\HealthCounter.cs" />
      <Compile Include="Assets\Scripts\Parrot.cs" />
      <Compile Include="Assets\Scripts\PicketCamp.cs" />
+     <Compile Include="Assets\Scripts\Sign.cs" />
      <Compile Include="Assets\Scripts\SpawnManager.cs" />
      <Compile Include="Assets\Scripts\StartWaveButton.cs" />
      <Compile Include="Assets\Tree.cs" />

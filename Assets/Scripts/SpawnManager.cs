@@ -41,6 +41,9 @@ public class SpawnManager : MonoBehaviour
 	[SerializeField]
 	List <GameObject> houseBatches = null;
 
+	[SerializeField]
+	GameObject negoita = null;
+
 	int currentWaveIndex = 0;
 
 	int currentGroupIndex = 0;
@@ -71,6 +74,11 @@ public class SpawnManager : MonoBehaviour
 	public static bool IsPlaying
 	{
 		get {return instance.isPlaying;}
+	}
+
+	public static GameObject Negoita
+	{
+		get {return instance.negoita;}
 	}
 
 	void Awake()
@@ -150,6 +158,29 @@ public class SpawnManager : MonoBehaviour
 				{
 					OnGameOver.Invoke();
 				}
+			}
+		}
+	}
+
+	public static void Damage()
+	{
+		if(!IsAlive)
+			return;
+
+		instance.hitpointCount--;
+
+		if(OnCitizenFinished != null)
+		{
+			OnCitizenFinished.Invoke();
+		}
+
+		if(instance.hitpointCount == 0)
+		{
+			instance.isPlaying = false;
+
+			if(OnGameOver != null)
+			{
+				OnGameOver.Invoke();
 			}
 		}
 	}

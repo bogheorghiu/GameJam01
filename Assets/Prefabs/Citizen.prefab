@@ -126,3 +126,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camp: {fileID: 0}
   Direction: {x: 0, y: 0, z: 0}
+  signPrefab: {fileID: 1381734875596218, guid: d2e0bf31a38e7f2429009a97f47fb74c, type: 2}

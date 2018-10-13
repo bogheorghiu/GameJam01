@@ -49,7 +49,7 @@ public class Parrot : MonoBehaviour
 
 		SpawnManager.KillCitizen(false);
 
-		Destroy(citizen.gameObject);
+		citizen.Die();
 
 		Destroy(gameObject);
 	}
