@@ -9,7 +9,7 @@ public class Negoita : MonoBehaviour
 
 	const float speedModifier = 3.5f;
 
-	const float shootCooldown = 0.5f;
+	const float shootCooldown = 0.3f;
 
 	float shootTimer = 0.0f;
 
@@ -40,7 +40,7 @@ public class Negoita : MonoBehaviour
 			transform.position += transform.right * speedModifier * Time.deltaTime;
 		}
 
-		if(Input.GetKey("space") && shootTimer > shootCooldown)
+		if(Input.GetMouseButtonDown(0) && shootTimer > shootCooldown && SpawnManager.IsPlaying)
 		{
 			Fire();
 		}

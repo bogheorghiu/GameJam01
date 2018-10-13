@@ -10,14 +10,17 @@ public class Parrot : MonoBehaviour
 
 	Vector3 direction;
 
+	bool hasDamaged = false;
+
 	public Vector3 Direction
 	{
 		set {direction = value;}
 	}
 
 	// Use this for initialization
-	void Start () {
-				
+	void Start () 
+	{
+		hasDamaged = false;			
 	}
 	
 	// Update is called once per frame
@@ -25,11 +28,29 @@ public class Parrot : MonoBehaviour
 	{
 		timer += Time.deltaTime;
 
-		transform.position += direction * 0.1f;
+		transform.position += direction * 0.2f;
 
 		if(timer > lifeTime)
 		{
 			Destroy(gameObject);
 		}
+	}
+
+	void OnTriggerEnter(Collider collider)
+	{
+		if(hasDamaged)
+			return;
+
+		var citizen = collider.gameObject.GetComponent<Citizen>();
+		if(citizen == null)
+			return;
+
+		hasDamaged = true;
+
+		SpawnManager.KillCitizen(false);
+
+		Destroy(citizen.gameObject);
+
+		Destroy(gameObject);
 	}
 }

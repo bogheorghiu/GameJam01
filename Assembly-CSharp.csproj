@@ -54,8 +54,13 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Negoita.cs" />
+     <Compile Include="Assets\Scripts\Citizen.cs" />
+     <Compile Include="Assets\Scripts\GameOverMenu.cs" />
+     <Compile Include="Assets\Scripts\HealthCounter.cs" />
      <Compile Include="Assets\Scripts\Parrot.cs" />
+     <Compile Include="Assets\Scripts\PicketCamp.cs" />
      <Compile Include="Assets\Scripts\SpawnManager.cs" />
+     <Compile Include="Assets\Scripts\StartWaveButton.cs" />
      <Compile Include="Assets\Tree.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/Angelica/Documents/Negoita/GameJam01/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
