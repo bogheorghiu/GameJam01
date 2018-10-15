@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class StartWaveButton : MonoBehaviour 
 {
+    public AudioSource ambiance;
+    public AudioSource button;
+    public AudioSource crowdboo;
 
 	// Use this for initialization
 	void Start () 
@@ -18,6 +21,9 @@ public class StartWaveButton : MonoBehaviour
 	public void Press()
 	{
 		SpawnManager.SpawnWave();
+        ambiance.Play();
+        button.Play();
+        crowdboo.Play();
 	}
 
 	void HandleWaveSpawned()

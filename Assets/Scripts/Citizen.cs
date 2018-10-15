@@ -8,12 +8,13 @@ public class Citizen : MonoBehaviour
 
 	public Vector3 Direction;
 
-	[SerializeField]
+    public AudioSource ImpactParrot;
+    [SerializeField]
 	GameObject signPrefab = null;
 
 	float timer = 0.0f;
 
-	const float cooldown = 2.0f;
+	const float cooldown = 5.0f;
 
 	// Use this for initialization
 	void Start () 
@@ -21,16 +22,23 @@ public class Citizen : MonoBehaviour
 		SpawnManager.OnGameRestarted += HandleGameRestarted;
 
 		timer = UnityEngine.Random.Range(0.0f, cooldown);
+        walking = true;
 	}
-	
+    public bool walking = true;
+    public bool allowtoshot = false;
 	// Update is called once per frame
 	void Update () 
 	{
-		transform.position += Direction * Time.deltaTime * 1.0f;
-
+        if (walking)
+        {
+            transform.position += Direction * Time.deltaTime * 1.0f;
+        }
+        if (allowtoshot == false)
+            return;
 		if(timer > cooldown)
 		{
 			var signObject = Instantiate(signPrefab);
+            GameManager.instance.construct--;
 			signObject.transform.position = transform.position;
 
 			var sign = signObject.GetComponent<Sign>();
@@ -51,18 +59,17 @@ public class Citizen : MonoBehaviour
 		SpawnManager.OnGameRestarted -= HandleGameRestarted;
 
 		Destroy(gameObject);
+            
 	}
 
 	void OnTriggerEnter(Collider collider)
 	{
-		var camp = collider.gameObject.GetComponent<PicketCamp>();
-		if(camp == null)
+	 if(collider.tag != "Santier")
 			return;
-
-		SpawnManager.KillCitizen(true);
-
-		Die();
-	}
+        allowtoshot = true;
+        walking = false;
+        
+    }
 
 	void HandleGameRestarted()
 	{

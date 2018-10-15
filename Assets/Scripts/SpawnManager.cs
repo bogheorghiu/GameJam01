@@ -18,9 +18,9 @@ public class CitizenWaveData
 
 public class SpawnManager : MonoBehaviour 
 {
-	static SpawnManager instance = null;
-
-	public static event Action OnWaveSpawned;
+	public static SpawnManager instance = null;
+    public AudioSource ImpactParrot;
+    public static event Action OnWaveSpawned;
 	public static event Action OnWaveEnded;
 	public static event Action OnGameOver;
 	public static event Action OnGameRestarted;
@@ -90,17 +90,17 @@ public class SpawnManager : MonoBehaviour
 	{
 		instance.isPlaying = true;
 
-		instance.currentGroupIndex = 0;
+		//instance.currentGroupIndex = 0;
 
-		instance.currentWave = instance.waveDatas[instance.currentWaveIndex];
+		//instance.currentWave = instance.waveDatas[instance.currentWaveIndex];
 
-		instance.currentWaveIndex++;
+		//instance.currentWaveIndex++;
 
-		instance.activeCitizenCount = 0;
-		for(int i = 0; i < instance.currentWave.Groups.Count; ++i)
-		{
-			instance.activeCitizenCount += instance.currentWave.Groups[i].Count;
-		}
+		//instance.activeCitizenCount = 0;
+		//for(int i = 0; i < instance.currentWave.Groups.Count; ++i)
+		//{
+		//	instance.activeCitizenCount += instance.currentWave.Groups[i].Count;
+		//}
 		
 		instance.StartCoroutine(instance.LaunchWaveCoroutine());
 
@@ -126,7 +126,7 @@ public class SpawnManager : MonoBehaviour
 				OnCitizenFinished.Invoke();
 			}
 
-			if(instance.hitpointCount == 0)
+			/*if(instance.hitpointCount == 0)
 			{
 				instance.isPlaying = false;
 
@@ -136,7 +136,7 @@ public class SpawnManager : MonoBehaviour
 				}
 
 				return;
-			}
+			} */
 		}
 
 		if(instance.activeCitizenCount == 0)
@@ -187,6 +187,7 @@ public class SpawnManager : MonoBehaviour
 
 	public static void Restart()
 	{
+        GameManager.instance.endgame = false;
 		instance.currentWaveIndex = 0;
 
 		instance.hitpointCount = 10;
@@ -207,15 +208,27 @@ public class SpawnManager : MonoBehaviour
 		}
 	}
 
-	IEnumerator LaunchWaveCoroutine()
-	{
-		for(int i = 0; i < currentWave.Groups.Count; ++i)
-		{
-			SpawnGroup();
+    IEnumerator LaunchWaveCoroutine()
+    {
+        instance.currentGroupIndex = 0;
 
-			yield return new WaitForSeconds(3.0f);
-		}
-	}
+        instance.currentWave = instance.waveDatas[UnityEngine.Random.Range(0, instance.waveDatas.Count - 1)];
+
+        instance.currentWaveIndex++;
+
+        while (!GameManager.instance.endgame)
+        {
+            currentGroupIndex = 0;
+            for (int i = 0; i < currentWave.Groups.Count; ++i)
+            {
+                SpawnGroup();
+
+                yield return new WaitForSeconds(5.0f);
+            }
+            yield return new WaitForSeconds(2.0f);
+            instance.currentWave = instance.waveDatas[UnityEngine.Random.Range(0, instance.waveDatas.Count - 1)];
+        }
+    }
 
 	void SpawnGroup()
 	{
@@ -247,6 +260,6 @@ public class SpawnManager : MonoBehaviour
 			citizen.Direction = direction;
 		}
 
-		currentGroupIndex++;
-	}
+        currentGroupIndex++;
+    }
 }

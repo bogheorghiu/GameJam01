@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Parrot : MonoBehaviour 
 {
-	const float lifeTime = 2.0f;
+	const float lifeTime = 20.0f;
 
-	float timer = 0.0f;
+    public Transform target;
+
+    float timer = 0.0f;
 
 	Vector3 direction;
 
@@ -28,7 +30,7 @@ public class Parrot : MonoBehaviour
 	{
 		timer += Time.deltaTime;
 
-		transform.position += direction * 0.2f;
+        transform.position = Vector3.MoveTowards(transform.position, target.position,  10 * Time.deltaTime);
 
 		if(timer > lifeTime)
 		{
@@ -45,12 +47,15 @@ public class Parrot : MonoBehaviour
 		if(citizen == null)
 			return;
 
-		hasDamaged = true;
+        Jetpack.instance.fuel += 18f;
+
+        hasDamaged = true;
 
 		SpawnManager.KillCitizen(false);
 
 		citizen.Die();
+        SpawnManager.instance.ImpactParrot.Play();
+        Destroy(gameObject);
 
-		Destroy(gameObject);
 	}
 }

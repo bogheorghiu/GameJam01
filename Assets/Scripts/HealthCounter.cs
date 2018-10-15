@@ -8,6 +8,7 @@ public class HealthCounter : MonoBehaviour
 	[SerializeField]
 	Text label = null;
 
+    public int complete = 20;
 	// Use this for initialization
 	void Start () 
 	{
@@ -15,10 +16,15 @@ public class HealthCounter : MonoBehaviour
 
 		SpawnManager.OnGameRestarted += HandleCitizenFinished;
 	}
-
-	void HandleCitizenFinished()
+    void Update()
+    {
+            while(complete < 100)
+            {
+            complete += 5;
+            }    
+    }
+    void HandleCitizenFinished()
 	{
-		label.text = string.Format("Health: {0}", SpawnManager.HitpointCount);
 	}
 	
 }

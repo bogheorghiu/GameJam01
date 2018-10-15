@@ -5,36 +5,48 @@ using UnityEngine.UI;
 
 public class GameOverMenu : MonoBehaviour 
 {
-	[SerializeField]
+    public static GameOverMenu instance;
+    [SerializeField]
 	CanvasGroup canvasGroup = null;
 
 	[SerializeField]
 	Text label = null;
-
-	// Use this for initialization
-	void Start () 
+    void Awake()
+    {
+        instance = this;
+    }
+    public AudioSource EndGameWin;
+    // Use this for initialization
+    void Start () 
 	{
-		SpawnManager.OnGameOver += HandleGameOver;
+
 	}
 
 	public void Press()
 	{
 		SpawnManager.Restart();
 
+        GameManager.instance.construct = 30;
+
 		canvasGroup.alpha = 0.0f;
 	}
 
-	void HandleGameOver()
+	public void HandleGameOverConstruct()
 	{
-		canvasGroup.alpha = 1.0f;
+		
 
-		if(SpawnManager.IsAlive)
+		if(GameManager.instance.construct >= 100)
 		{
 			label.text = "Sa traiti,\ndom' Primar!";
-		}
-		else
-		{
+            EndGameWin.Play();
+            canvasGroup.alpha = 1.0f;
+            GameManager.instance.endgame = true;
+        }
+        if (GameManager.instance.construct <= 0)
+        {
 			label.text = "Vremuri grele,\nce sa facem?!";
-		}
+            canvasGroup.alpha = 1.0f;
+            GameManager.instance.endgame = true;
+        }
 	}
 }
